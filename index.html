@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+    <title>BOOKSKY!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="navbar">
+        <h1>BOOKSKY</h1>
+    </div>
+    <div class="container">
+        <div class="Book-container">
+            <h2>Rich dad poor dad</h2>
+            <p>"Rich Dad Poor Dad" by Robert Kiyosaki is a financial classic emphasizing the importance of financial education, assets, and passive income. It challenges conventional beliefs, offering valuable insights for wealth creation.</p>
+            <h5>Robert</h5>
+            <button onclick="deleteBook(event)">Delete</button>
+        </div>
+    </div>
+    <div class="popup-overlay"></div>
+    <div class="popup-box">
+        <h2>Add book</h2>
+        <form>
+            <input type="text" placeholder="Book title" id="book-title-input">
+            <input type="text" placeholder="Book author" id="book-author-input">
+            <textarea placeholder="Short description" id="book-description-input"></textarea>
+            <button id="add-book">Add</button>
+            <button id="cancel-popup">Cancel</button>
+        </form>
+    </div>
+    <button class="add-button" id="add-popup-button">+</button>
+    <script>
+        var popupOverlay = document.querySelector(".popup-overlay");
+        var popupBox = document.querySelector(".popup-box");
+        var addPopupButton = document.getElementById("add-popup-button");
+        var cancelPopupButton = document.getElementById("cancel-popup"); // Added this line
+        var addBookButton = document.getElementById("add-book"); // Added this line
+        var container = document.querySelector(".container");
+
+        addPopupButton.addEventListener("click", function () {
+            popupOverlay.style.display = "block";
+            popupBox.style.display = "block";
+        });
+
+        cancelPopupButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            popupOverlay.style.display = "none";
+            popupBox.style.display = "none";
+        });
+
+        addBookButton.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            // Create a new div with the book details
+            var div = document.createElement("div");
+            div.setAttribute("class", "Book-container"); // Updated class name
+            div.innerHTML = `<h2>${document.getElementById("book-title-input").value}</h2>
+                <p>${document.getElementById("book-description-input").value}</p>
+                <h5>${document.getElementById("book-author-input").value}</h5>
+                <button onclick="deleteBook(event)">Delete</button>`;
+
+            // Append the new div to the container
+            container.appendChild(div);
+
+            // Reset input values
+            document.getElementById("book-title-input").value = "";
+            document.getElementById("book-author-input").value = "";
+            document.getElementById("book-description-input").value = "";
+
+            // Close the popup
+            popupOverlay.style.display = "none";
+            popupBox.style.display = "none";
+        });
+
+        function deleteBook(event) {
+            event.target.parentElement.remove();
+        }
+    </script>
+</body>
+
+</html>
